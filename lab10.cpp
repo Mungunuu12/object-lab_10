@@ -2,151 +2,105 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 using namespace std;
 
-// =====================================================
-// 1-р хүн хийх хэсэг:
-// Template LinkedList классын үндсэн бүтэц
-// add, insert, get, delete, length функцуудыг бүрэн хэрэгжүүлнэ.
-// =====================================================
-
 template <class T>
-class LinkedList {
+class LinkedList{
 private:
-    struct Node {
+    class Node{
+    public:
         T data;
         Node* next;
-
         Node(T value) {
             data = value;
             next = nullptr;
         }
     };
-
     Node* head;
     int size;
 
 public:
-    LinkedList() {
+    LinkedList(){
         head = nullptr;
         size = 0;
     }
-
-    ~LinkedList() {
-        while (head != nullptr) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
-        }
-    }
-
-    void add(T t) {
+    void add(T t){
         Node* newNode = new Node(t);
-
-        if (head == nullptr) {
+        if (head == nullptr){
             head = newNode;
-        } else {
+        } 
+        else{
             Node* current = head;
             while (current->next != nullptr) {
                 current = current->next;
             }
             current->next = newNode;
         }
-
         size++;
     }
-
     void insert(T t, int index) {
-        if (index < 0 || index > size) {
-            cout << "Index buruu baina!" << endl;
-            return;
-        }
-
         Node* newNode = new Node(t);
-
-        if (index == 0) {
+        if (index == 0){
             newNode->next = head;
             head = newNode;
-        } else {
+        } 
+        else{
             Node* current = head;
-
             for (int i = 0; i < index - 1; i++) {
                 current = current->next;
             }
-
             newNode->next = current->next;
             current->next = newNode;
         }
-
         size++;
     }
-
     T get(int index) {
         if (index < 0 || index >= size) {
             cout << "Index buruu baina!" << endl;
             return nullptr;
         }
-
         Node* current = head;
-
         for (int i = 0; i < index; i++) {
             current = current->next;
         }
-
         return current->data;
     }
-
     void deleteAt(int index) {
         if (index < 0 || index >= size) {
             cout << "Index buruu baina!" << endl;
             return;
         }
-
         Node* temp;
-
-        if (index == 0) {
+        if (index == 0){
             temp = head;
             head = head->next;
-        } else {
+        } 
+        else{
             Node* current = head;
-
             for (int i = 0; i < index - 1; i++) {
                 current = current->next;
             }
-
             temp = current->next;
             current->next = temp->next;
         }
-
         delete temp;
         size--;
     }
-
     int length() {
         return size;
     }
-
     void swapData(int i, int j) {
         T temp = get(i);
         Node* nodeI = head;
         Node* nodeJ = head;
-
         for (int a = 0; a < i; a++) nodeI = nodeI->next;
         for (int b = 0; b < j; b++) nodeJ = nodeJ->next;
-
         nodeI->data = nodeJ->data;
         nodeJ->data = temp;
     }
 };
-
-
-// =====================================================
-// 2-р хүн хийх хэсэг:
-// Lab7 дээрх Shape, Shape2D, Circle, Square, Triangle классуудыг
-// шинэ даалгаварт тохируулж цэвэрхэн бичнэ.
-// area(), perimeter(), print() функцуудыг override хийж хэрэгжүүлнэ.
-// =====================================================
 
 class Shape {
 protected:
@@ -176,11 +130,9 @@ public:
     double talbai() override {
         return urt * urt * M_PI;
     }
-
     double perimeter() override {
         return urt * M_PI * 2;
     }
-
     string turul() override {
         return "Toirog";
     }
@@ -205,11 +157,9 @@ public:
     double talbai() override {
         return urt * urt;
     }
-
     double perimeter() override {
         return 4 * urt;
     }
-
     string turul() override {
         return "Kvadrat";
     }
@@ -234,32 +184,20 @@ public:
     double talbai() override {
         return urt * undur / 2.0;
     }
-
     double perimeter() override {
         return 3 * urt;
     }
-
     string turul() override {
         return "Gurvaljin";
     }
 };
 
-
-// =====================================================
-// 3-р хүн хийх хэсэг:
-// main функц дээр 20-30 санамсаргүй дүрс үүсгэнэ.
-// LinkedList<Shape*> ашиглан хадгална.
-// Дүрсүүдийг төрөл харгалзахгүйгээр area()-аар эрэмбэлж хэвлэнэ.
-// =====================================================
-
-void sortByArea(LinkedList<TwoDShape*>& list) {
+void sort(LinkedList<TwoDShape*>& list) {
     int n = list.length();
-
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             TwoDShape* a = list.get(j);
             TwoDShape* b = list.get(j + 1);
-
             if (a->talbai() > b->talbai()) {
                 list.swapData(j, j + 1);
             }
@@ -280,34 +218,26 @@ int main() {
             countCircle++;
             shapes.add(new Circle("Circle" + to_string(countCircle), x, y, side));
         } 
-
         else if (type == 1){
             countSquare++;
             shapes.add(new Square("Square" + to_string(countSquare), x, y, side));
         }
-
         else{
             countTriangle++;
             shapes.add(new Triangle("Triangle" + to_string(countTriangle), x, y, side));
         }
     }
-
     cout << "Niit uusgesen dursiin too: " << shapes.length() << endl;
-    
-    sortByArea(shapes);
-
+    sort(shapes);
     cout << "\n--- Talbaigaar eremblegdsen jagsaalt ---\n" << endl;
-
     for (int i = 0; i < shapes.length(); i++){
         TwoDShape* s = shapes.get(i);
         cout << s->ner() << "\t" << s->turul()
              << "\n ~ Talbai: "    << s->talbai()
              << "\n ~ Perimeter: " << s->perimeter() << "\n";
     }
-
     for (int i = 0; i < shapes.length(); i++){
         delete shapes.get(i);
     }
-
     return 0;
 }
