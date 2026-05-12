@@ -293,15 +293,7 @@ int main() {
     }
 
     cout << "Niit uusgesen dursiin too: " << shapes.length() << endl;
-    cout << "\n--- Talbaigaar erembelegdeegui jagsaalt ---\n" << endl;
-
-    for (int i = 0; i < shapes.length(); i++) {
-        TwoDShape* s = shapes.get(i);
-        cout << s->ner() << "\t" << s->turul()
-             << "\n ~ Talbai: "    << s->talbai()
-             << "\n ~ Perimeter: " << s->perimeter() << "\n";
-    }
-
+    
     sortByArea(shapes);
 
     cout << "\n--- Talbaigaar eremblegdsen jagsaalt ---\n" << endl;
