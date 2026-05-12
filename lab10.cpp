@@ -91,7 +91,7 @@ public:
     int length() {
         return size;
     }
-    void swapData(int i, int j) {
+    void swap(int i, int j) {
         T temp = get(i);
         Node* nodeI = head;
         Node* nodeJ = head;
@@ -199,7 +199,7 @@ void sort(LinkedList<TwoDShape*>& list) {
             TwoDShape* a = list.get(j);
             TwoDShape* b = list.get(j + 1);
             if (a->talbai() > b->talbai()) {
-                list.swapData(j, j + 1);
+                list.swap(j, j + 1);
             }
         }
     }
