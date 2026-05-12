@@ -198,7 +198,7 @@ void sort(LinkedList<TwoDShape*>& list) {
         for (int j = 0; j < n - i - 1; j++) {
             TwoDShape* a = list.get(j);
             TwoDShape* b = list.get(j + 1);
-            if (a->talbai() > b->talbai()) {
+            if (a->talbai() < b->talbai()) {
                 list.swap(j, j + 1);
             }
         }
@@ -216,15 +216,15 @@ int main() {
         double side = 1 + rand() % 20;
         if (type == 0){
             countCircle++;
-            shapes.add(new Circle("Circle" + to_string(countCircle), x, y, side));
+            shapes.add(new Circle("Circle: " + to_string(countCircle), x, y, side));
         } 
         else if (type == 1){
             countSquare++;
-            shapes.add(new Square("Square" + to_string(countSquare), x, y, side));
+            shapes.add(new Square("Square: " + to_string(countSquare), x, y, side));
         }
         else{
             countTriangle++;
-            shapes.add(new Triangle("Triangle" + to_string(countTriangle), x, y, side));
+            shapes.add(new Triangle("Triangle: " + to_string(countTriangle), x, y, side));
         }
     }
     cout << "Niit uusgesen dursiin too: " << shapes.length() << endl;
@@ -232,9 +232,8 @@ int main() {
     cout << "\n--- Talbaigaar eremblegdsen jagsaalt ---\n" << endl;
     for (int i = 0; i < shapes.length(); i++){
         TwoDShape* s = shapes.get(i);
-        cout << s->ner() << "\t" << s->turul()
-             << "\n ~ Talbai: "    << s->talbai()
-             << "\n ~ Perimeter: " << s->perimeter() << "\n";
+        cout << i+1 << ". " << s->ner() << "\t" << s->turul()
+             << "\n ~ Talbai: " << s->talbai() << "\n";
     }
     for (int i = 0; i < shapes.length(); i++){
         delete shapes.get(i);
